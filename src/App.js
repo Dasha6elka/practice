@@ -1,5 +1,6 @@
 import React, {Component, Fragment} from "react";
 import TableRow from "./TableRow";
+import HeadTableRow from "./HeadTableRow";
 
 export default class App extends Component {
     constructor() {
@@ -22,16 +23,11 @@ export default class App extends Component {
             <Fragment>
                 <table className={"highlight centered"}>
                     <thead>
-                    <tr>
-                        {this.state.head.map((item, index) => <th key={index}>{item}</th>)}
-                        <th/>
-                        <th/>
-                        <th>
-                            <a className="btn-floating btn-large waves-effect waves-light red">
-                                <i className="material-icons">add</i>
-                            </a>
-                        </th>
-                    </tr>
+                    <HeadTableRow
+                        length={this.state.data.length}
+                        head={this.state.head}
+                        onAddButtonClick={this.onAddButtonClick.bind(this)}
+                    />
                     </thead>
                     <tbody>
                     {this.state.data.map((row, index) => (
@@ -46,6 +42,11 @@ export default class App extends Component {
                 </table>
             </Fragment>
         );
+    }
+
+    onAddButtonClick(item) {
+        this.state.data.push(item);
+        this.setState({data: this.state.data});
     }
 
     onDeleteButtonClick(index) {
