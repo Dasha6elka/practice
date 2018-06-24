@@ -1,6 +1,12 @@
 import React, {Component} from "react";
+import PropTypes from "prop-types";
 
 export default class TableRow extends Component {
+    constructor(props) {
+        super(props);
+        this.onDelete = this.onDelete.bind(this);
+    }
+
     render() {
         return (
             <tr>
@@ -23,7 +29,7 @@ export default class TableRow extends Component {
                 <td>
                     <a
                         className={"button btn waves-effect waves-light"}
-                        onClick={this.onDelete.bind(this)}
+                        onClick={this.onDelete}
                     >
                         Удалить
                     </a>
@@ -36,3 +42,9 @@ export default class TableRow extends Component {
         this.props.onDeleteButtonClick(this.props.index);
     }
 }
+
+TableRow.propTypes = {
+    index: PropTypes.number.isRequired,
+    data: PropTypes.arrayOf(PropTypes.string).isRequired,
+    onDeleteButtonClick: PropTypes.func.isRequired,
+};

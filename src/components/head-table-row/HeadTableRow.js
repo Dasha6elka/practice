@@ -1,6 +1,12 @@
 import React, {Component} from "react";
+import PropTypes from "prop-types";
 
 export default class HeadTableRow extends Component {
+    constructor(props) {
+        super(props);
+        this.onAdd = this.onAdd.bind(this);
+    }
+
     render() {
         return (
             <tr>
@@ -9,7 +15,7 @@ export default class HeadTableRow extends Component {
                 <th/>
                 <th>
                     <a className="btn-floating btn-large waves-effect waves-light red"
-                       onClick={this.onAdd.bind(this)}>
+                       onClick={this.onAdd}>
                         <i
                             className="material-icons">add
                         </i>
@@ -20,6 +26,11 @@ export default class HeadTableRow extends Component {
     }
 
     onAdd() {
-        this.props.onAddButtonClick(["TEST_NAME", "TEST_COST"]);
+        this.props.onAddButtonClick();
     }
 }
+
+HeadTableRow.propTypes = {
+    head: PropTypes.arrayOf(PropTypes.string).isRequired,
+    onAddButtonClick: PropTypes.func.isRequired,
+};
