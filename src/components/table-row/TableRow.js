@@ -5,6 +5,8 @@ export default class TableRow extends Component {
     constructor(props) {
         super(props);
         this.onDelete = this.onDelete.bind(this);
+        this.onEdit = this.onEdit.bind(this);
+        this.onView = this.onView.bind(this);
     }
 
     render() {
@@ -15,13 +17,15 @@ export default class TableRow extends Component {
                 <td>
                     <a
                         className={"button btn waves-effect waves-light"}
+                        onClick={this.onView}
                     >
-                        Информация
+                        ?
                     </a>
                 </td>
                 <td>
                     <a
                         className={"button btn waves-effect waves-light"}
+                        onClick={this.onEdit}
                     >
                         Редактировать
                     </a>
@@ -41,10 +45,20 @@ export default class TableRow extends Component {
     onDelete() {
         this.props.onDeleteButtonClick(this.props.index);
     }
+
+    onEdit() {
+        this.props.onEditButtonClick(this.props.index);
+    }
+
+    onView() {
+        this.props.onViewButtonClick(this.props.index);
+    }
 }
 
 TableRow.propTypes = {
     index: PropTypes.number.isRequired,
     data: PropTypes.arrayOf(PropTypes.string).isRequired,
     onDeleteButtonClick: PropTypes.func.isRequired,
+    onEditButtonClick: PropTypes.func.isRequired,
+    onViewButtonClick: PropTypes.func.isRequired,
 };

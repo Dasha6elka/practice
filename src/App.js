@@ -1,5 +1,5 @@
 import React, {Component, Fragment} from "react";
-import {AddModalWindow, FormContent, HeadTableRow, TableRow} from "./components";
+import {AddModalWindow, EditModalWindow, FormContent, HeadTableRow, TableRow, ViewModalWindow} from "./components";
 
 export default class App extends Component {
     static addSchema = [
@@ -19,7 +19,33 @@ export default class App extends Component {
             placeholder: "Телефон",
         },
     ];
+    static viewSchema = [
+        {
+            type: "text",
+            name: "fullName",
+            readOnly: true,
+        },
+        {
+            type: "text",
+            name: "salary",
+            readOnly: true,
+        },
+    ];
+    static editSchema = [
+        {
+            type: "text",
+            name: "fullName",
+            placeholder: "ФИО",
+        },
+        {
+            type: "text",
+            name: "salary",
+            placeholder: "заработная плата",
+        },
+    ];
     addModalRef = React.createRef();
+    editModalRef = React.createRef();
+    viewModalRef = React.createRef();
     state = {
         head: ["№", "ФИО", "Сумма"],
         data: [
@@ -36,6 +62,8 @@ export default class App extends Component {
         super(props);
         this.onAddButtonClick = this.onAddButtonClick.bind(this);
         this.onDeleteButtonClick = this.onDeleteButtonClick.bind(this);
+        this.onEditButtonClick = this.onEditButtonClick.bind(this);
+        this.onViewButtonClick = this.onViewButtonClick.bind(this);
     }
 
     static getFormContent(schema) {
@@ -63,6 +91,8 @@ export default class App extends Component {
                             key={index}
                             index={index + 1}
                             data={row}
+                            onViewButtonClick={this.onViewButtonClick}
+                            onEditButtonClick={this.onEditButtonClick}
                             onDeleteButtonClick={this.onDeleteButtonClick}
                         />
                     ))}
@@ -71,6 +101,14 @@ export default class App extends Component {
                 <AddModalWindow
                     ref={this.addModalRef}
                     formContent={App.getFormContent(App.addSchema)}
+                />
+                <ViewModalWindow
+                    ref={this.viewModalRef}
+                    formContent={App.getFormContent(App.viewSchema)}
+                />
+                <EditModalWindow
+                    ref={this.editModalRef}
+                    formContent={App.getFormContent(App.editSchema)}
                 />
             </Fragment>
         );
@@ -81,6 +119,24 @@ export default class App extends Component {
             return;
         }
         this.addModalRef.current.toggleVisibility();
+    }
+
+    onViewButtonClick(index) {
+        const dataItem = this.state.data[index - 1];
+        if (!this.viewModalRef.current) {
+            return;
+        }
+        const values = {};
+        App.viewSchema.forEach((item, index) => values[item.name] = dataItem[index]);
+        this.viewModalRef.current.setValues(values);
+        this.viewModalRef.current.toggleVisibility();
+    }
+
+    onEditButtonClick(index) {
+        if (!this.editModalRef.current) {
+            return;
+        }
+        this.editModalRef.current.toggleVisibility();
     }
 
     onDeleteButtonClick(index) {

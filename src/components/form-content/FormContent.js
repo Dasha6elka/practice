@@ -1,8 +1,15 @@
 import React, {Component, Fragment} from "react";
 import PropTypes from "prop-types";
+import {Input} from "../input";
 
 export default class FormContent extends Component {
     inputs = {};
+
+    constructor(props) {
+        super(props);
+        this.getValues = this.getValues.bind(this);
+        this.setValues = this.setValues.bind(this);
+    }
 
     render() {
         return (
@@ -19,12 +26,11 @@ export default class FormContent extends Component {
                             type: item.type || "text",
                             placeholder: item.placeholder || "",
                             name: item.name,
+                            value: item.value || "",
                             disabled: item.disabled || false,
+                            readOnly: item.readOnly || false,
                         };
-                        if (item.value) {
-                            params.defaultValue = item.value;
-                        }
-                        return <input
+                        return <Input
                             key={index}
                             ref={ref => this.inputs[item.name] = ref}
                             {...params}
@@ -35,13 +41,22 @@ export default class FormContent extends Component {
         );
     }
 
+    setValues(values) {
+        for (const key in this.inputs) {
+            if (!this.inputs.hasOwnProperty(key)) {
+                continue;
+            }
+            this.inputs[key].setValue(values[key]);
+        }
+    }
+
     getValues() {
         const result = {};
         for (const key in this.inputs) {
             if (!this.inputs.hasOwnProperty(key)) {
                 continue;
             }
-            result[key] = this.inputs[key].value;
+            result[key] = this.inputs[key].getValue();
         }
         return result;
     }
@@ -53,6 +68,7 @@ FormContent.propTypes = {
         placeholder: PropTypes.string,
         name: PropTypes.string.isRequired,
         disabled: PropTypes.bool,
+        readOnly: PropTypes.bool,
         value: PropTypes.string,
     })).isRequired,
 };

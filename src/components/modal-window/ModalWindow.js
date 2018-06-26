@@ -24,6 +24,7 @@ export default class ModalWindow extends Component {
                     onClick={this.toggleVisibility}
                 />
                 <form
+                    method={"POST"}
                     onSubmit={this.props.onSubmit}
                     className={`modal-window ${this.getVisibilityClassName("modal-window")}`}
                 >

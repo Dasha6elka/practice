@@ -3,17 +3,18 @@ import {ModalWindow} from "../index";
 import PropTypes from "prop-types";
 
 
-export default class AddModalWindow extends Component {
+export default class ViewModalWindow extends Component {
     modalRef = React.createRef();
     formContentRef = React.createRef();
     state = {
-        onVisible: false,
+        isVisible: false,
     };
 
     constructor(props) {
         super(props);
         this.onSubmit = this.onSubmit.bind(this);
         this.toggleVisibility = this.toggleVisibility.bind(this);
+        this.setValues = this.setValues.bind(this);
     }
 
     render() {
@@ -29,15 +30,22 @@ export default class AddModalWindow extends Component {
                     className={"button btn waves-effect waves-light"}
                     onClick={this.toggleVisibility}
                 >
-                    отправить
+                    закрыть просмотр информации
                 </button>
             </ModalWindow>
         );
     }
 
+    // noinspection JSMethodCanBeStatic
     onSubmit(event) {
         event.preventDefault();
-        console.log(this.formContentRef.current.getValues());
+    }
+
+    setValues(values) {
+        if (!this.formContentRef.current) {
+            return;
+        }
+        this.formContentRef.current.setValues(values);
     }
 
     toggleVisibility() {
@@ -49,7 +57,7 @@ export default class AddModalWindow extends Component {
     }
 }
 
-AddModalWindow.propTypes = {
+ViewModalWindow.propTypes = {
     formContent: PropTypes.shape({
         ref: PropTypes.object.isRequired,
         value: PropTypes.object.isRequired,

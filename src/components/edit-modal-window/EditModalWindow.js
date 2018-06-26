@@ -3,11 +3,11 @@ import {ModalWindow} from "../index";
 import PropTypes from "prop-types";
 
 
-export default class AddModalWindow extends Component {
+export default class EditModalWindow extends Component {
     modalRef = React.createRef();
     formContentRef = React.createRef();
     state = {
-        onVisible: false,
+        isVisible: false,
     };
 
     constructor(props) {
@@ -29,7 +29,7 @@ export default class AddModalWindow extends Component {
                     className={"button btn waves-effect waves-light"}
                     onClick={this.toggleVisibility}
                 >
-                    отправить
+                    редактировать
                 </button>
             </ModalWindow>
         );
@@ -49,7 +49,7 @@ export default class AddModalWindow extends Component {
     }
 }
 
-AddModalWindow.propTypes = {
+EditModalWindow.propTypes = {
     formContent: PropTypes.shape({
         ref: PropTypes.object.isRequired,
         value: PropTypes.object.isRequired,
