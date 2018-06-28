@@ -36,7 +36,6 @@ export default class ViewModalWindow extends Component {
         );
     }
 
-    // noinspection JSMethodCanBeStatic
     onSubmit(event) {
         event.preventDefault();
     }

@@ -133,9 +133,13 @@ export default class App extends Component {
     }
 
     onEditButtonClick(index) {
+        const dataItem = this.state.data[index - 1];
         if (!this.editModalRef.current) {
             return;
         }
+        const values = {};
+        App.editSchema.forEach((item, index) => values[item.name] = dataItem[index]);
+        this.editModalRef.current.setValues(values);
         this.editModalRef.current.toggleVisibility();
     }
 

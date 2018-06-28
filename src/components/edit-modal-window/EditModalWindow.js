@@ -14,6 +14,7 @@ export default class EditModalWindow extends Component {
         super(props);
         this.onSubmit = this.onSubmit.bind(this);
         this.toggleVisibility = this.toggleVisibility.bind(this);
+        this.setValues = this.setValues.bind(this);
     }
 
     render() {
@@ -38,6 +39,13 @@ export default class EditModalWindow extends Component {
     onSubmit(event) {
         event.preventDefault();
         console.log(this.formContentRef.current.getValues());
+    }
+
+    setValues(values) {
+        if (!this.formContentRef.current) {
+            return;
+        }
+        this.formContentRef.current.setValues(values);
     }
 
     toggleVisibility() {
