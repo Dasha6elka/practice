@@ -49,10 +49,10 @@ export default class EditModalWindow extends Component {
     }
 
     toggleVisibility() {
-        this.setState({isVisible: !this.state.isVisible});
         if (!this.modalRef.current) {
             return;
         }
+        this.setState({isVisible: !this.state.isVisible});
         this.modalRef.current.toggleVisibility();
     }
 }
